@@ -1,12 +1,18 @@
 body {
   font-family: 'Teko', sans-serif;
   color: #000;
+  background-color: #EBDE23;
 }
 
 div {
   align-items: center;
 }
 
+h1 {
+  font-size: 60px;
+  margin: 0;
+  padding: 0;
+}
 .button {
   top: 0;
   left: 0;
@@ -18,11 +24,12 @@ div {
 }
 
 .pokemon-name {
-  background-color: gray;
+  background-color: #FF3C00;
   border: none;
   color: white;
+  font-family: 'Teko', sans-serif;
   display: flex;
-  font-size: 16px;
+  font-size: 24px;
   flex-grow: 1;
   list-style: none;
   margin: 3px;
@@ -38,7 +45,7 @@ div {
 }
 
 .pokemon-list {
-  padding-left: 0px;
+  padding-left: 0;
   list-style-type: none;
 }
 
@@ -65,13 +72,10 @@ div {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-
   /* to show it above other content */
   z-index: 999;
-
   /* to allow scrolling if the screen is not high enough*/
   overflow: auto;
-
   /* this is used to center the modal */
   display: grid;
 }
@@ -89,7 +93,7 @@ div {
 .modal-close {
   float: right;
   border: 0;
-  line-height: 0px;
+  line-height: 0;
   background: none;
   color: #777;
   text-decoration: underline;
@@ -100,9 +104,9 @@ div {
   text-align: center;
   text-transform: capitalize;
   background: none;
-  padding: 0px;
+  padding: 0;
   margin-block-start: 10px;
-  margin-block-end: 0px;
+  margin-block-end: 0;
 }
 
 .modal p {
@@ -116,5 +120,4 @@ div {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-
 }

@@ -1,25 +1,26 @@
-
+//Pokemon
 var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-  var $pokemonList = document.querySelector('ul');
-  var $modalContainer = document.querySelector('#modal-container');
+  var $pokemonList = $('ul');
+  var $modalContainer = $('#modal-container');
 
-  function add(name) { /*Add Additional Pokemon Attributes To Object Array*/
+  function add(name) {
     repository.push(name);
+  }
+
+  function getAll() {
+    return repository;
   }
 
   //>Button and List Informartion
   function addListItem(pokemon){
-    var listItem = document.createElement('li');
-    var button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add('pokemon-name');
-    listItem.appendChild(button);
-    $pokemonList.appendChild(listItem);
+    var $listItem = $('<li></li>');
+      $pokemonList.append($listItem);
+    var $button = $('<button class="pokemon-name" class="modal-close">' + pokemon.name + '</button>');
+    $listItem.append(button);
 
-    //Event Listener here
-    button.addEventListener('click', function () {
+    button.on('click', function () {
       showDetails(pokemon);
     });
   }
@@ -33,44 +34,31 @@ var pokemonRepository = (function () {
 
   function showModal(item) {
     // Clear all existing modal content
-    $modalContainer.innerHTML = '';
+    $modalContainer.textHTML = '';
 
-    var modal = document.createElement('div');
-    modal.classList.add('modal');
-
-    // Add the new modal content
-    var closeButtonElement = document.createElement('button');
-    closeButtonElement.classList.add('modal-close');
-    closeButtonElement.innerText = 'Close';
+    var $modal = $('<div class="modal"></div>');
+    var $closeButtonElement = $('<button class="modal-close">Close</button>');
     closeButtonElement.addEventListener('click', hideModal);
 
-    var titleElement = document.createElement('h1');
-    titleElement.innerText = item.name;
+    var $titleElement = $('<h1></h1>');
+    titleElement.text = item.name;
 
-    var imageElement = document.createElement('img');
+    var $imageElement = $('<img src=" ' +item.imageUrl+ ' " class="modal-img">');
     imageElement.src = item.imageUrl;
-    imageElement.classList.add('modal-img');
 
-    var contentElement = document.createElement('p');
-    contentElement.innerText = 'Height: '+ item.height;
+    var $contentElement = $('<p></p>');
+    contentElement.text = 'Height: '+ item.height;
 
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(titleElement);
-    modal.appendChild(contentElement);
-    modal.appendChild(imageElement);
-    $modalContainer.appendChild(modal);
-    $modalContainer.classList.add('is-visible');
-
-
-
+    $modal.append($closeButtonElement);
+    $modal.append($titleElement);
+    $modal.append($contentElement);
+    $modal.append($imageElement);
+    $modalContainer.append($modal);
+    $modalContainer.addClass('is-visible');
   }
 
-  /* document.querySelector('#show-modal').addEventListener('click', () => {
-  showModal('Modal', 'This is the modal content!');
-});*/
-
 function hideModal() {
-  $modalContainer.classList.remove('is-visible');
+  $modalContainer.remove('is-visible');
 }
 
 
@@ -80,46 +68,42 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-$modalContainer.addEventListener('click', (e) => {
-  // Since this is also triggered when clicking INSIDE the modal container,
-  // We only want to close if the user clicks directly on the overlay
+$('$modalContainer').on('click', function (e) {
   var target = e.target;
-  if (target === $modalContainer) {
-    hideModal();
-  }
+  if (target ===$modalContainer)
+{  hideModal(); }
 });
 
+$('$modalContainer').off('click');
 
 function add(pokemon) {
   repository.push(pokemon);
 }
 
-function getAll() {
-  return repository;
-}
+
 
 function loadList() {
-  return fetch(apiUrl).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    json.results.forEach(function (item) {
+  return $.ajax(apiUrl, { dataType: 'json' })
+  .then(function(item) {
+    $.each(item.results, function(index, item) {
       var pokemon = {
         name: item.name,
         detailsUrl: item.url
       };
       add(pokemon);
     });
-  }).catch(function (e) {
-    console.error(e);
   })
+  .catch(function(error) {
+    /*Load Functions Set In Order To Retrieve Data From Pokemon API*/
+    document.write(error);
+  });
 }
 
 function loadDetails(item) {
   var url = item.detailsUrl;
-  return fetch(url).then(function (response) {
-    return response.json();
+  return $.ajax(url, {dataType: 'json'}).then(function(responseJSON) {
+    return responseJSON;
   }).then(function (details) {
-    // Now we add details to the item
     item.imageUrl = details.sprites.front_default;
     item.height = details.height;
     item.weight = details.weight;
