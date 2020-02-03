@@ -18,7 +18,6 @@ var pokemonRepository = (function () {
     $button.text(pokemon.name)
     $listItem.append($button);
     $button.on('click', function () {showDetails(pokemon);});
-    $modalContainer.off('click');
 
     //function add(pokemon) {repository.push(pokemon);  }
   }
