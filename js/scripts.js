@@ -1,53 +1,48 @@
-//Pokemon
+//Written Pokedex
 var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   var $pokemonList = $('ul');
   var $modalContainer = $('#modal-container');
 
-  function add(name) {
-    repository.push(name);
-  }
-
+  //Function to get all pokemon data
   function getAll() {
     return repository;
   }
 
-  //>Button and List Informartion
+  //Function to add list item/button for each pokemon object
   function addListItem(pokemon){
     var $listItem = $('<li></li>');
-      $pokemonList.append($listItem);
-    var $button = $('<button class="pokemon-name" class="modal-close">' + pokemon.name + '</button>');
-    $listItem.append(button);
+    $pokemonList.append($listItem);
+    var $button = $('<button class="pokemon-name"></button>');
+    $button.text(pokemon.name)
+    $listItem.append($button);
+    $button.on('click', function () {showDetails(pokemon);});
+    $modalContainer.off('click');
 
-    button.on('click', function () {
-      showDetails(pokemon);
-    });
+    //function add(pokemon) {repository.push(pokemon);  }
   }
-  //< End of Button and List Information
 
+  //Show pokemon details
   function showDetails(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
       showModal(pokemon);
     });
   }
 
+  //Show modal for each pokemon after clicking
   function showModal(item) {
-    // Clear all existing modal content
-    $modalContainer.textHTML = '';
+    $modalContainer.empty();
 
     var $modal = $('<div class="modal"></div>');
     var $closeButtonElement = $('<button class="modal-close">Close</button>');
-    closeButtonElement.addEventListener('click', hideModal);
+    $closeButtonElement.on('click', function (event) {
+      hideModal();
+    });
 
-    var $titleElement = $('<h1></h1>');
-    titleElement.text = item.name;
-
+    var $titleElement = $('<h1>' + item.name + '</h1>');
     var $imageElement = $('<img src=" ' +item.imageUrl+ ' " class="modal-img">');
-    imageElement.src = item.imageUrl;
-
-    var $contentElement = $('<p></p>');
-    contentElement.text = 'Height: '+ item.height;
+    var $contentElement = $('<p>' + 'Height: '+ item.height +'</p>');
 
     $modal.append($closeButtonElement);
     $modal.append($titleElement);
@@ -57,30 +52,20 @@ var pokemonRepository = (function () {
     $modalContainer.addClass('is-visible');
   }
 
-function hideModal() {
-  $modalContainer.remove('is-visible');
-}
+  //Hide Modal & Event Listeners
+    function hideModal() {
+    $modalContainer.removeClass('is-visible');
+    }
+
+    $(document).keydown(function (e) {  if (e.key === "Escape") { hideModal();} });
+
+    $modalContainer.click(function() {  hideModal();});
 
 
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-    hideModal();
-  }
-});
-
-$('$modalContainer').on('click', function (e) {
-  var target = e.target;
-  if (target ===$modalContainer)
-{  hideModal(); }
-});
-
-$('$modalContainer').off('click');
-
-function add(pokemon) {
-  repository.push(pokemon);
-}
-
-
+    //Function to add new pokemon data
+    function add(name) {
+      repository.push(name);
+    }
 
 function loadList() {
   return $.ajax(apiUrl, { dataType: 'json' })
@@ -120,7 +105,7 @@ return {
   showDetails: showDetails,
   loadList: loadList,
   loadDetails: loadDetails,
-  showModal: showModal,
+  //showModal: showModal,
   hideModal: hideModal
 };
 
