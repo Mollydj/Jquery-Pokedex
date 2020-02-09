@@ -17,6 +17,7 @@ h1 {
 #pokemon-name {
   background-color: #ff3c00;
   border: none;
+  margin: 1px;
   color: white;
   font-family: 'Teko', sans-serif;
   font-size: 24px;
