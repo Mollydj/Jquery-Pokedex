@@ -6,9 +6,7 @@ var pokemonRepository = (function () {
   var $modalContainer = $('#modal-container');
 
   //Function to get all pokemon data
-  function getAll() {
-    return repository;
-  }
+  function getAll() { return repository; }
 
   //Function to add list item/button for each pokemon object
   function addListItem(pokemon){
