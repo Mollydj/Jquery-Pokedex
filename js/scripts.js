@@ -14,7 +14,7 @@ var pokemonRepository = (function () {
   function addListItem(pokemon){
     var $listItem = $('<li></li>');
     $pokemonList.append($listItem);
-    var $button = $('<button class="pokemon-name"></button>');
+    var $button = $('<button type="button" id="pokemon-name" class=" btn btn-default btn-lg btn-block list-group-item list-group-item-action col-12" data-toggle="modal" data-target="#exampleModal"></button>');
     $button.text(pokemon.name)
     $listItem.append($button);
     $button.on('click', function () {showDetails(pokemon);});
@@ -31,22 +31,13 @@ var pokemonRepository = (function () {
 
   //Show modal for each pokemon after clicking
   function showModal(item) {
-    $modalContainer.empty();
 
-    var $modal = $('<div class="modal"></div>');
-    var $closeButtonElement = $('<button class="modal-close">Close</button>');
-    $closeButtonElement.on('click', function (event) {hideModal();} );
+$('.modal-body').empty();
+$('.modal-title').text(item.name);
+$('.modal-body').append('<img src=" ' +item.imageUrl+ ' " class="modal-img">');
+$('.modal-body').append('<p>' + 'Height: '+ item.height +'</p>');
+$('.modal-body').append('<p>' + 'Weight: '+ item.weight +'</p>');
 
-    var $titleElement = $('<h1>' + item.name + '</h1>');
-    var $imageElement = $('<img src=" ' +item.imageUrl+ ' " class="modal-img">');
-    var $contentElement = $('<p>' + 'Height: '+ item.height +'</p>');
-
-    $modal.append($closeButtonElement);
-    $modal.append($titleElement);
-    $modal.append($contentElement);
-    $modal.append($imageElement);
-    $modalContainer.append($modal);
-    $modalContainer.addClass('is-visible');
   }
 
   //Hide Modal & Event Listeners
