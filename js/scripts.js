@@ -1,4 +1,3 @@
-//Written Pokedex
 var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
@@ -25,22 +24,22 @@ var pokemonRepository = (function () {
     pokemonRepository.loadDetails(pokemon).then(function () {
       showModal(pokemon);
     });
+
   }
 
   //Show modal for each pokemon after clicking
   function showModal(item) {
-
 $('.modal-body').empty();
 $('.modal-title').text(item.name);
-$('.modal-body').append('<img src=" ' +item.imageUrl+ ' " class="modal-img">');
-$('.modal-body').append('<p>' + 'Height: '+ item.height +'</p>');
-$('.modal-body').append('<p>' + 'Weight: '+ item.weight +'</p>');
+$('.modal-body').append('<img src=" ' +item.imageUrl+ ' " class="img-fluid" alt="Responsive image"> ');
+$('.modal-body').append('<p>' + 'Height: '+ item.height + ' Decimetres' + '</p>');
+$('.modal-body').append('<p>' + 'Weight: '+ item.weight + ' Hectograms' + '</p>');
 
   }
 
   //Hide Modal & Event Listeners
   function hideModal() {  $modalContainer.removeClass('is-visible');}
-  $(document).keydown(function (e) {  if (e.key === "Escape") { hideModal();} });
+  $(document).keydown(function (e) {  if (e.key === 'Escape') { hideModal();} });
   $modalContainer.click(function() {hideModal();} );
 
 
