@@ -1,7 +1,6 @@
 body {
   font-family: 'Teko', sans-serif;
   color: #000;
-  background-color: #edb223;
 }
 
 div {
@@ -29,11 +28,7 @@ h1 {
 .pokemon-title {
   font-family: 'Teko', sans-serif;
   font-size: 40px;
-}
-
-.pokemon-list {
-  padding-left: 0;
-  list-style-type: none;
+  text-transform: capitalize;
 }
 
 .ul {
@@ -44,45 +39,12 @@ h1 {
   list-style-type: none;
 }
 
-/* modals */
-
-#modal-container {
-  display: none;
-}
-
-#modal-container.is-visible {
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.modal {
-  margin: auto;
-  background: #fff;
-  padding: 15px;
-  width: 100%;
-}
-
-.modal-close {
-  float: right;
-  border: 0;
-  line-height: 0;
-  background: none;
-  color: #777;
-  text-decoration: underline;
+.modal-title {
+  text-transform: capitalize;
 }
 
 .modal h1 {
-  font-size: 60px;
-  text-align: center;
   text-transform: capitalize;
-  background: none;
-  padding: 0;
-  margin-block-start: 10px;
-  margin-block-end: 0;
-}
-
-.modal p {
-  margin: 0;
-  text-align: center;
 }
 
 .page-container {
